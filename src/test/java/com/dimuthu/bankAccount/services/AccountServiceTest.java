@@ -1,9 +1,8 @@
 package com.dimuthu.bankAccount.services;
 
-import com.dimuthu.bankAccount.entitities.*;
-import org.junit.jupiter.api.Assertions;
+import com.dimuthu.bankAccount.entitities.Account;
+import com.dimuthu.bankAccount.entitities.User;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
@@ -21,6 +20,7 @@ class AccountServiceTest {
         Account userAcc = accountService.createAccount(user, "USD");
 
         assertFalse(accountService.withDraw(userAcc.getUuid(), new BigDecimal(100)));
+        assertEquals(new BigDecimal(0), userAcc.getBalance());
     }
 
     @Test
@@ -33,5 +33,6 @@ class AccountServiceTest {
         accountService.deposit(userAcc.getUuid(), new BigDecimal(300));
 
         assertTrue(accountService.withDraw(userAcc.getUuid(), new BigDecimal(100)));
+        assertEquals(new BigDecimal(200), userAcc.getBalance());
     }
 }
