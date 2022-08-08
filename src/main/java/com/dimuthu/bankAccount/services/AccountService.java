@@ -17,15 +17,8 @@ public class AccountService {
     }
 
     public Account createAccount(User user, String accountCurrency) {
-        UUID accountUuid = UUID.randomUUID();
-        Account newUserAccount = new Account();
-        newUserAccount.setUser(user);
-        newUserAccount.setAccountCurrency(accountCurrency);
-        newUserAccount.setUuid(accountUuid);
-        newUserAccount.setBalance(new BigDecimal(0));
-
+        Account newUserAccount = new Account(user, accountCurrency, UUID.randomUUID());
         this.accountList.add(newUserAccount);
-
         return newUserAccount;
     }
 

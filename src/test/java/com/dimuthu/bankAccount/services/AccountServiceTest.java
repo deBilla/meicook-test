@@ -12,10 +12,8 @@ class AccountServiceTest {
     private final AccountService accountService = new AccountService();
 
     @Test
-    void When_Withdraw_Amount_Larger_than_Balance() {
-        User user = new User();
-        user.setName("dimuthu");
-        user.setAge(17);
+    void When_Withdraw_Amount_Larger_than_Balance() throws Exception {
+        User user = new User("dimuthu", 19);
 
         Account userAcc = accountService.createAccount(user, "USD");
 
@@ -24,10 +22,8 @@ class AccountServiceTest {
     }
 
     @Test
-    void When_Withdraw_Amount_smaller_than_Balance() {
-        User user = new User();
-        user.setName("dimuthu");
-        user.setAge(17);
+    void When_Withdraw_Amount_smaller_than_Balance() throws Exception {
+        User user = new User("dimuthu", 29);
 
         Account userAcc = accountService.createAccount(user, "USD");
         accountService.deposit(userAcc.getUuid(), new BigDecimal(300));
