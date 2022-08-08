@@ -31,7 +31,7 @@ public class Account {
         }
     }
 
-    public Account(User user, String accountCurrency, UUID uuid) {
+    public Account(User user, String accountCurrency) {
         this.user = user;
 
         try {
@@ -41,6 +41,6 @@ public class Account {
             throw new NotSupportedCurrencyException("Currency not supported");
         }
 
-        this.uuid = uuid;
+        this.uuid = UUID.randomUUID();
     }
 }

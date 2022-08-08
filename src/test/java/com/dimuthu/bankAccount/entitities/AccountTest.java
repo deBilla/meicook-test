@@ -5,7 +5,6 @@ import com.dimuthu.bankAccount.exceptions.NotSupportedCurrencyException;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -16,7 +15,7 @@ class AccountTest {
     void When_Age_Below_18() {
         Throwable throwable =  assertThrows(Throwable.class, () -> {
             User user = new User("Dimuthu", 17);
-            Account account = new Account(user, "USD", UUID.randomUUID());
+            Account account = new Account(user, "USD");
         });
 
         assertEquals(AgeException.class, throwable.getClass());
@@ -27,7 +26,7 @@ class AccountTest {
         Throwable throwable =  assertThrows(Throwable.class, () -> {
             User user = new User("Dimuthu", 20);
             user.setAge(17);
-            Account account = new Account(user, "USD", UUID.randomUUID());
+            Account account = new Account(user, "USD");
         });
 
         assertEquals(AgeException.class, throwable.getClass());
@@ -36,7 +35,7 @@ class AccountTest {
     @Test
     void When_Age_Greater_Than_18() {
         User user = new User("Dimuthu", 19);
-        Account account = new Account(user, "USD", UUID.randomUUID());
+        Account account = new Account(user, "USD");
 
         assertEquals(user, account.getUser());
         assertEquals("USD", account.getAccountCurrency());
@@ -47,7 +46,7 @@ class AccountTest {
     void When_Currency_Is_Wrong() {
         Throwable throwable =  assertThrows(Throwable.class, () -> {
             User user = new User("Dimuthu", 20);
-            Account account = new Account(user, "USDD", UUID.randomUUID());
+            Account account = new Account(user, "USDD");
         });
 
         assertEquals(NotSupportedCurrencyException.class, throwable.getClass());
@@ -57,7 +56,7 @@ class AccountTest {
     void When_Currency_Is_Wrong_And_Set_Later() {
         Throwable throwable =  assertThrows(Throwable.class, () -> {
             User user = new User("Dimuthu", 20);
-            Account account = new Account(user, "USD", UUID.randomUUID());
+            Account account = new Account(user, "USD");
             account.setAccountCurrency("USDD");
         });
 
