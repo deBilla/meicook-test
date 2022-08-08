@@ -1,19 +1,17 @@
 package com.dimuthu.bankAccount.services.implementation;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import com.dimuthu.bankAccount.entitities.Account;
 import com.dimuthu.bankAccount.entitities.Transaction;
 import com.dimuthu.bankAccount.exceptions.AccountBalanceInsufficientException;
 import com.dimuthu.bankAccount.exceptions.AccountDoesNotExistException;
 import com.dimuthu.bankAccount.repositories.AccountRepository;
 import com.dimuthu.bankAccount.repositories.UserRepository;
+import com.dimuthu.bankAccount.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.dimuthu.bankAccount.services.AccountService;
+
+import java.math.BigDecimal;
+import java.util.Optional;
 
 @Service
 public class AccountServiceImplementation implements AccountService {
