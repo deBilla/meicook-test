@@ -4,16 +4,27 @@ import com.dimuthu.bankAccount.entitities.Account;
 import com.dimuthu.bankAccount.entitities.Transaction;
 import com.dimuthu.bankAccount.entitities.User;
 import com.dimuthu.bankAccount.exceptions.AccountBalanceInsufficientException;
-import com.dimuthu.bankAccount.exceptions.AgeException;
+import com.dimuthu.bankAccount.services.AccountService;
+import com.dimuthu.bankAccount.services.implementation.AccountServiceImplementation;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccountServiceTest {
-    private final AccountService accountService = new AccountService();
+    @InjectMocks
+    AccountServiceImplementation accountService;
 
+    @BeforeEach
+    public void init() {
+        MockitoAnnotations.openMocks(this);
+    }
     @Test
     void When_Withdraw_Amount_Larger_than_Balance() {
         Throwable throwable =  assertThrows(Throwable.class, () -> {
