@@ -5,6 +5,7 @@ import com.dimuthu.bankAccount.entitities.Transaction;
 import com.dimuthu.bankAccount.exceptions.AccountBalanceInsufficientException;
 import com.dimuthu.bankAccount.exceptions.AccountDoesNotExistException;
 import com.dimuthu.bankAccount.repositories.AccountRepository;
+import com.dimuthu.bankAccount.repositories.TransactionRepository;
 import com.dimuthu.bankAccount.repositories.UserRepository;
 import com.dimuthu.bankAccount.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class AccountServiceImplementation implements AccountService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    TransactionRepository transactionRepository;
 
     private static final BigDecimal minBalance = new BigDecimal("200.00");
 
@@ -40,6 +44,7 @@ public class AccountServiceImplementation implements AccountService {
             userAccount.get().setBalance(userAccount.get().getBalance().subtract(transaction.getWithdrawAmount()));
             accountRepository.save(userAccount.get());
             transaction.setBalance(userAccount.get().getBalance());
+            transactionRepository.save(transaction);
         } else {
             throw new AccountBalanceInsufficientException("Withdraw amount should be larger than minimum balance");
         }
@@ -56,6 +61,7 @@ public class AccountServiceImplementation implements AccountService {
         userAccount.get().setBalance(userAccount.get().getBalance().add(transaction.getDepositAmount()));
         accountRepository.save(userAccount.get());
         transaction.setBalance(userAccount.get().getBalance());
+        transactionRepository.save(transaction);
 
         return transaction;
     }

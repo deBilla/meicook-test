@@ -5,6 +5,7 @@ import com.dimuthu.bankAccount.entitities.Transaction;
 import com.dimuthu.bankAccount.entitities.User;
 import com.dimuthu.bankAccount.exceptions.AccountBalanceInsufficientException;
 import com.dimuthu.bankAccount.repositories.AccountRepository;
+import com.dimuthu.bankAccount.repositories.TransactionRepository;
 import com.dimuthu.bankAccount.repositories.UserRepository;
 import com.dimuthu.bankAccount.services.implementation.AccountServiceImplementation;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +32,9 @@ class AccountServiceTest {
     @Mock
     UserRepository userRepository;
 
+    @Mock
+    TransactionRepository transactionRepository;
+
     @BeforeEach
     public void init() {
         MockitoAnnotations.openMocks(this);
@@ -38,12 +42,13 @@ class AccountServiceTest {
     @Test
     void When_Withdraw_Amount_Larger_than_Balance() {
         Throwable throwable =  assertThrows(Throwable.class, () -> {
-            User user = new User("dimuthu", 19);
+            User user = new User("dimuthu", 19, "931881000V");
             Account account = new Account(user, "USD");
 
             when(userRepository.save(Mockito.any())).thenReturn(user);
             when(accountRepository.save(Mockito.any())).thenReturn(account);
             when(accountRepository.findById(Mockito.any())).thenReturn(Optional.of(account));
+            when(transactionRepository.save(Mockito.any())).thenReturn(null);
 
             Account userAcc = accountService.createAccount(account);
             Transaction transaction = new Transaction(userAcc.getUuid(), new BigDecimal(100), new BigDecimal(0));
@@ -56,12 +61,13 @@ class AccountServiceTest {
 
     @Test
     void When_Withdraw_Amount_smaller_than_Balance() {
-        User user = new User("dimuthu", 29);
+        User user = new User("dimuthu", 29, "931881000V");
         Account account = new Account(user, "USD");
 
         when(userRepository.save(Mockito.any())).thenReturn(user);
         when(accountRepository.save(Mockito.any())).thenReturn(account);
         when(accountRepository.findById(Mockito.any())).thenReturn(Optional.of(account));
+        when(transactionRepository.save(Mockito.any())).thenReturn(null);
 
         Account userAcc = accountService.createAccount(account);
         Transaction transactionDeposit = new Transaction(userAcc.getUuid(), new BigDecimal(0), new BigDecimal(300));

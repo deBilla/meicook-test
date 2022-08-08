@@ -8,6 +8,4 @@ import java.util.UUID;
 
 @Repository
 public interface AccountRepository extends CrudRepository<Account, UUID> {
-
-    Optional<Account> findById(UUID uuid);
 }

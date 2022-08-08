@@ -1,5 +1,6 @@
 package com.dimuthu.bankAccount.entitities;
 
+import com.dimuthu.bankAccount.exceptions.AmountCannotBeNegativeException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -24,8 +25,27 @@ public class Transaction {
 
     public Transaction(UUID accountUuid, BigDecimal withdrawAmount, BigDecimal depositAmount) {
         this.accountUuid = accountUuid;
+
+        if (withdrawAmount.compareTo(BigDecimal.valueOf(0)) < 0 || depositAmount.compareTo(BigDecimal.valueOf(0)) < 0) throw new AmountCannotBeNegativeException("Amount Cannot be negative");
+
         this.withdrawAmount = withdrawAmount;
         this.depositAmount = depositAmount;
         this.uuid = UUID.randomUUID();
+    }
+
+    public Transaction() {
+        this.uuid = UUID.randomUUID();
+    }
+
+    public void setWithdrawAmount(BigDecimal withdrawAmount) {
+        if (withdrawAmount.compareTo(BigDecimal.valueOf(0)) < 0) throw new AmountCannotBeNegativeException("Amount Cannot be negative");
+
+        this.withdrawAmount = withdrawAmount;
+    }
+
+    public void setDepositAmount(BigDecimal depositAmount) {
+        if (depositAmount.compareTo(BigDecimal.valueOf(0)) < 0) throw new AmountCannotBeNegativeException("Amount Cannot be negative");
+
+        this.depositAmount = depositAmount;
     }
 }

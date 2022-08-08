@@ -14,7 +14,7 @@ class AccountTest {
     @Test
     void When_Age_Below_18() {
         Throwable throwable =  assertThrows(Throwable.class, () -> {
-            User user = new User("Dimuthu", 17);
+            User user = new User("Dimuthu", 17, "931881000V");
             Account account = new Account(user, "USD");
         });
 
@@ -24,7 +24,7 @@ class AccountTest {
     @Test
     void When_Age_Below_18_And_Set_Later() {
         Throwable throwable =  assertThrows(Throwable.class, () -> {
-            User user = new User("Dimuthu", 20);
+            User user = new User("Dimuthu", 20, "931881000V");
             user.setAge(17);
             Account account = new Account(user, "USD");
         });
@@ -34,7 +34,7 @@ class AccountTest {
 
     @Test
     void When_Age_Greater_Than_18() {
-        User user = new User("Dimuthu", 19);
+        User user = new User("Dimuthu", 19, "931881000V");
         Account account = new Account(user, "USD");
 
         assertEquals(user, account.getUser());
@@ -45,7 +45,7 @@ class AccountTest {
     @Test
     void When_Currency_Is_Wrong() {
         Throwable throwable =  assertThrows(Throwable.class, () -> {
-            User user = new User("Dimuthu", 20);
+            User user = new User("Dimuthu", 20, "931881000V");
             Account account = new Account(user, "USDD");
         });
 
@@ -55,7 +55,7 @@ class AccountTest {
     @Test
     void When_Currency_Is_Wrong_And_Set_Later() {
         Throwable throwable =  assertThrows(Throwable.class, () -> {
-            User user = new User("Dimuthu", 20);
+            User user = new User("Dimuthu", 20, "931881000V");
             Account account = new Account(user, "USD");
             account.setAccountCurrency("USDD");
         });

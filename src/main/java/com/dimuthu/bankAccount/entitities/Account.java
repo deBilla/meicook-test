@@ -15,7 +15,7 @@ import java.util.UUID;
 public class Account {
     @NonNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user.id")
+    @JoinColumn(name = "user.nic")
     private User user;
 
     private BigDecimal balance = BigDecimal.valueOf(0);
